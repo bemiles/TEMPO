@@ -11,22 +11,22 @@ Imaging_N    None        7.50                         14.00
 
 
 IFS_low_J    100         1.10                         1.40
-IFS_low_L    100         1.45                         1.80
-IFS_low_H    100         1.90                         2.30
+IFS_low_H    100         1.45                         1.80
+IFS_low_K    100         1.90                         2.30
 IFS_low_L    100         2.90                         4.10
 IFS_low_M    100         4.50                         5.20
 IFS_low_N    20          7.50                         14.00
 
 IFS_med_J    1000        1.10                         1.40
-IFS_med_L    1000        1.45                         1.80
-IFS_med_H    1000        1.90                         2.30
+IFS_med_H    1000        1.45                         1.80
+IFS_med_K    1000        1.90                         2.30
 IFS_med_L    1000        2.90                         4.10
 IFS_med_M    1000        4.50                         5.20
 IFS_med_N    600         7.50                         14.00
 
 IFS_high_J   10000       1.10                         1.40
-IFS_high_L   10000       1.45                         1.80
-IFS_high_H   10000       1.90                         2.30
+IFS_high_H   10000       1.45                         1.80
+IFS_high_K   10000       1.90                         2.30
 IFS_high_L   10000       2.90                         4.10
 IFS_high_M   10000       4.50                         5.20
 IFS_high_N   5000        7.50                         14.00
