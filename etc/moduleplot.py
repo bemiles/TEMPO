@@ -139,40 +139,63 @@ def plot_resolution(wavelength, resolution, label=None):
         plt.legend()
     plt.grid(True)
     
-# bin in linear space! 
+ 
 def rebin_spectrum_to_resolution(wavelength, flux, target_resolution):
     """
-    Rebin a spectrum to a constant desired resolution R = λ / Δλ.
+    Rebin a spectrum to a constant desired resolution R = λ / Δλ using
+    linear spacing.
 
     Parameters
     ----------
     wavelength : ndarray
-        Original wavelength array in microns.
+        Original wavelength array in microns 
+        (must be sorted in ascending order).
     flux : ndarray
-        Original flux array.
+        Original flux array (same length as wavelength).
     target_resolution : float
         Desired constant spectral resolution.
 
     Returns
     -------
     rebinned_wavelength : ndarray
-        Rebin center wavelengths.
+        Array of rebinned wavelength centers.
     rebinned_flux : ndarray
-        Flux interpolated at rebinned wavelengths.
+        Array of rebinned fluxes interpolated to those centers.
     """
-    # Define log-spacing for equal resolution: Δλ/λ = 1/R
-    loglam_start = np.log(wavelength[0])
-    loglam_end = np.log(wavelength[-1])
-    n_bins = int(np.log(wavelength[-1] - wavelength[0]) * target_resolution)
-    loglam_bins = np.linspace(loglam_start, loglam_end, n_bins)
-    rebinned_wavelength = np.exp(loglam_bins)
+    # Sort wavelength and flux
+    sort_idx = np.argsort(wavelength)
+    wavelength = wavelength[sort_idx]
+    flux = flux[sort_idx]
 
-    # Interpolate flux to the rebinned wavelength grid
-    flux_interp = interp1d(wavelength, flux, kind='linear', bounds_error=False,
-                           fill_value="extrapolate")
-    rebinned_flux = flux_interp(rebinned_wavelength)
+    # Initialize bins
+    start = wavelength[0]
+    end = wavelength[-1]
 
-    return rebinned_wavelength, rebinned_flux
+    rebinned_wavelength = []
+    rebinned_flux = []
+
+    current_lambda = start
+
+    # Create interpolator for original flux
+    flux_interp = interp1d(wavelength, flux, kind='linear', 
+                           bounds_error=False, fill_value="extrapolate")
+
+    # Loop over bins
+    while current_lambda < end:
+        delta_lambda = current_lambda / target_resolution
+        next_lambda = current_lambda + delta_lambda
+        bin_center = (current_lambda + next_lambda) / 2
+
+        # Midpoint flux value (simple approximation)
+        bin_flux = flux_interp(bin_center)
+
+        rebinned_wavelength.append(bin_center)
+        rebinned_flux.append(bin_flux)
+
+        current_lambda = next_lambda
+
+    return np.array(rebinned_wavelength), np.array(rebinned_flux)
+
     
     
     # 1.1 - 14 microns 
