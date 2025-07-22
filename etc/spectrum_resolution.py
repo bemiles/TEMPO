@@ -75,6 +75,67 @@ def load_bobcat_spectrum_from_tar(filename):
     flux = data[:, 1]        # flux in erg/cm^2/s/Hz
     return wavelength, flux
 
+def load_diamondback_spectrum_from_tar(filename):
+    """
+    Load Sonora Diamondback spectrum data from within a .tar.gz file.
+
+    Parameters
+    ----------
+    filename : str
+        Base filename (without .tar.gz extension)
+
+    Returns
+    -------
+    wavelength : ndarray
+        Wavelength array in microns
+    flux : ndarray
+        Flux array in erg/cm²/s/Hz
+    """
+    filepath = get_filepath(filename)
+    with tarfile.open(filepath, mode='r:gz') as tar:
+        # Get the first file in the archive
+        member = tar.getmembers()[0]
+        f = tar.extractfile(member)
+        if f is None:
+            raise IOError(f"Could not extract file from {filepath}")
+        content = f.read().decode("utf-8")
+        data = np.genfromtxt(io.StringIO(content), skip_header=2)
+    
+    wavelength = data[:, 0]  # wavelength in microns
+    flux = data[:, 1]        # flux in erg/cm^2/s/Hz
+    return wavelength, flux
+    
+    
+def load_elfowl_spectrum_from_tar(filename):
+    """
+    Load Sonora Elf Owl spectrum data from within a .tar.gz file.
+
+    Parameters
+    ----------
+    filename : str
+        Base filename (without .tar.gz extension)
+
+    Returns
+    -------
+    wavelength : ndarray
+        Wavelength array in microns
+    flux : ndarray
+        Flux array in erg/cm²/s/Hz
+    """
+    filepath = get_filepath(filename)
+    with tarfile.open(filepath, mode='r:gz') as tar:
+        # Get the first file in the archive
+        member = tar.getmembers()[0]
+        f = tar.extractfile(member)
+        if f is None:
+            raise IOError(f"Could not extract file from {filepath}")
+        content = f.read().decode("utf-8")
+        data = np.genfromtxt(io.StringIO(content), skip_header=2)
+    
+    wavelength = data[:, 0]  # wavelength in microns
+    flux = data[:, 1]        # flux in erg/cm^2/s/Hz
+    return wavelength, flux
+    
 
 def compute_resolution(wavelength):
     """
@@ -199,9 +260,7 @@ def rebin_spectrum_to_resolution(wavelength, flux, target_resolution):
 
     return np.array(rebinned_wavelength), np.array(rebinned_flux)
 
-# REZIP THE FILES 
 
-# for plotting function with rebinned array: add a legend for the lines 
 
 # Add a way to allow users to use Bobcat, Elf Owl, and Diamondback models. Elf 
 # Owl and Diamondback will be called in by a separate function 
@@ -220,7 +279,8 @@ def rebin_spectrum_to_resolution(wavelength, flux, target_resolution):
 
 # add a user input for resolution and mode (wavelength min and max is fixed)
 
-# later down the line: fix the hardcoded file path so it can also take a Madden file
+# later down the line: fix the hardcoded file path so it can also take a Madden
+# file
 
 # document the different integers for the available models
 
