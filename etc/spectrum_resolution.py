@@ -30,27 +30,29 @@ from scipy.interpolate import interp1d
 
 def get_filepath(filename, base_dir="/Users/ellabutler/MilesGroup/5063476"):
     """
-    Load spectrum data from within a .tar.gz archive.
-
+    Construct the full filepath to a .tar.gz archive containing spectrum data.
+    
     Parameters
     ----------
     filename : str
         Base filename (without .tar.gz extension)
+        
+    base_dir : str, optional
+        Directory where the .tar.gz files are stored. 
+        Defaults to a specific path.
 
     Returns
     -------
-    wavelength : ndarray
-        Wavelength array in microns
-    flux : ndarray
-        Flux array in erg/cm²/s/Hz
+    str
+        Full path to the .tar.gz file.
     """
     filepath = os.path.join(base_dir, filename + ".tar.gz")
     return filepath
 
 
-def load_bobcat_spectrum_from_tar(filename, teff, grav, mh):
+def load_bobcat_spectra_from_tar(filename, teff, grav, mh):
     """
-    Load Sonora Bobcat spectrum data from within a .tar.gz file.
+    Load Sonora Bobcat spectral data from within a .tar.gz file.
 
     Parameters
     ----------
@@ -71,24 +73,32 @@ def load_bobcat_spectrum_from_tar(filename, teff, grav, mh):
     -------
     wavelength : ndarray
         Wavelength array in microns
+        
     flux : ndarray
         Flux array in erg/cm²/s/Hz
     """
     filepath = get_filepath(filename)
     with tarfile.open(filepath, mode='r:gz') as tar:
-        # Get the first file in the archive
-        member = tar.getmembers()[0]
-        f = tar.extractfile(member)
-        if f is None:
-            raise IOError(f"Could not extract file from {filepath}")
-        content = f.read().decode("utf-8")
+        for member in tar.getmembers():
+            if member.isfile():
+                f = tar.extractfile(member)
+                if f is None:
+                    continue  # Skip unreadable files
+            try:
+                content = f.read().decode("utf-8")
+                data = np.genfromtxt(io.StringIO(content), skip_header=2)
+                if data.ndim == 2 and data.shape[1] >= 2:
+                    wavelength = data[:, 0]  # wavelength in microns
+                    flux = data[:, 1]  # flux in erg/cm^2/s/Hz
+            except Exception as e:
+                print(f"Warning: could not process {member.name} due to {e}")
+       
         data = np.genfromtxt(io.StringIO(content), skip_header=2)
     
-    wavelength = data[:, 0]  # wavelength in microns
-    flux = data[:, 1]        # flux in erg/cm^2/s/Hz
     return wavelength, flux
 
-def load_diamondback_spectrum_from_tar(filename, teff, grav, mh, co, logkzz):
+
+def load_diamondback_spectra_from_tar(filename, teff, grav, mh, co, fsed):
     """
     Load Sonora Diamondback spectrum data from within a .tar.gz file.
 
@@ -108,34 +118,40 @@ def load_diamondback_spectrum_from_tar(filename, teff, grav, mh, co, logkzz):
         
     co: int
         Carbon/Oxygen ratio related to solar abundance
-        
-    logkzz: int
-        log of the eddy diffusion coefficient 
+    
+    fsed: int
+        Cloud parameterization 
         
 
     Returns
     -------
     wavelength : ndarray
         Wavelength array in microns
+        
     flux : ndarray
         Flux array in erg/cm²/s/Hz
     """
     filepath = get_filepath(filename)
     with tarfile.open(filepath, mode='r:gz') as tar:
-        # Get the first file in the archive
-        member = tar.getmembers()[0]
-        f = tar.extractfile(member)
-        if f is None:
-            raise IOError(f"Could not extract file from {filepath}")
-        content = f.read().decode("utf-8")
-        data = np.genfromtxt(io.StringIO(content), skip_header=2)
-    
-    wavelength = data[:, 0]  # wavelength in microns
-    flux = data[:, 1]        # flux in erg/cm^2/s/Hz
+        for member in tar.getmembers():
+            if member.isfile():
+                f = tar.extractfile(member)
+                if f is None:
+                    continue  # Skip unreadable files
+                try:
+                    content = f.read().decode("utf-8")
+                    data = np.genfromtxt(io.StringIO(content), skip_header=2)
+                    if data.ndim == 2 and data.shape[1] >= 2:
+                        wavelength = data[:, 0]
+                        flux = data[:, 1]
+                except Exception as e:
+                    print(f"Warning: could not process {member.name} due to {e}")
+                    continue
+
     return wavelength, flux
     
     
-def load_elfowl_spectrum_from_tar(filename, teff, grav, mh, co, logkzz):
+def load_elfowl_spectra_from_tar(filename, teff, grav, mh, co, logkzz):
     """
     Load Sonora Elf Owl spectrum data from within a .tar.gz file.
 
@@ -157,24 +173,43 @@ def load_elfowl_spectrum_from_tar(filename, teff, grav, mh, co, logkzz):
         Carbon/Oxygen ratio related to solar abundance
         
     logkzz: int
-        log of the eddy diffusion coefficient 
+        Log of the eddy diffusion coefficient 
         
 
     Returns
     -------
     wavelength : ndarray
         Wavelength array in microns
+        
     flux : ndarray
         Flux array in erg/cm²/s/Hz
     """
-    teff= '450.0' #K
-    grav='31.0' # m/s/s
-    mh='-1.0'
-    co='0.5' # relative to solar
-    logkzz='9.0' 
-    ds = xarray.load_dataset(f'/filename/output_425.0_475.0/spectra_logzz_{logkzz}_teff_{teff}_grav_{grav}_mh_{mh}_co_{co}.nc')
-    return ds
-    
+    filepath = get_filepath(filename)
+    spectra = []
+
+    with tarfile.open(filepath, mode='r:gz') as tar:
+        for member in tar.getmembers():
+            if member.isfile() and member.name.endswith(".nc"):
+                f = tar.extractfile(member)
+                if f is None:
+                    continue  # Skip unreadable files
+                try:
+                    # Read the file content into memory as bytes and load with xarray
+                    file_obj = io.BytesIO(f.read())
+                    ds = xarray.open_dataset(file_obj)
+                    
+                    # Extract wavelength and flux from known variable names
+                    # (Update these keys if your .nc structure is different)
+                    wavelength = ds['wavelength'].values
+                    flux = ds['flux'].values
+
+                    spectra.append((member.name, wavelength, flux))
+                except Exception as e:
+                    print(f"Warning: could not load {member.name} due to {e}")
+                    continue
+
+    return spectra
+
 
 def compute_resolution(wavelength):
     """
@@ -204,8 +239,10 @@ def get_model_filename(temperature, gravity, metallicity):
     ----------
     temperature : int
         Stellar effective temperature (e.g., 200 for 2000 K)
+        
     gravity : float
         log10(surface gravity in cgs, i.e. log(g/cm/s²))
+        
     metallicity : float
         Metallicity [M/H] (e.g., -0.5, +0.5)
 
@@ -261,8 +298,10 @@ def rebin_spectrum_to_resolution(wavelength, flux, target_resolution):
     wavelength : ndarray
         Original wavelength array in microns 
         (must be sorted in ascending order).
+        
     flux : ndarray
         Original flux array (same length as wavelength).
+        
     target_resolution : float
         Desired constant spectral resolution.
 
@@ -270,6 +309,7 @@ def rebin_spectrum_to_resolution(wavelength, flux, target_resolution):
     -------
     rebinned_wavelength : ndarray
         Array of rebinned wavelength centers.
+        
     rebinned_flux : ndarray
         Array of rebinned fluxes interpolated to those centers.
     """
@@ -311,15 +351,6 @@ def rebin_spectrum_to_resolution(wavelength, flux, target_resolution):
 # co ratios range from 0.5, 1, 1.5 
 
 # write as a Jupyter notebook too! 
-
-
-# make it so that the user can plug in a temperature, surface gravity, and 
-# metallicity, to get back the inputs requested 
-
-# add a user input for resolution and mode (wavelength min and max is fixed)
-
-# add user input for kzz and co for elf owl function 
-
 
 
 # later down the line: fix the hardcoded file path so it can also take a Madden
