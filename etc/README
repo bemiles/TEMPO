@@ -1,0 +1,90 @@
+Spectral Model Loader & Analysis Toolkit
+
+Overview
+This Python script provides a set of utilities for loading, validating, and processing spectra from three different atmospheric model grids:
+	•	Bobcat — standard .tar.gz archives containing plain text or gzipped spectra.
+	•	Diamondback — .zip archives containing .spec text spectra.
+	•	Elf Owl — .tar.gz archives containing NetCDF (.nc) spectra.
+It supports:
+	•	Building valid filenames from physical parameters.
+	•	Validating filenames against available model grids.
+	•	Extracting and reading spectra from compressed archives.
+	•	Rebining spectra to constant resolution.
+	•	Plotting spectral resolution curves.
+The script assumes all model archive files are stored in the same directory as this script.
+
+Features
+1. Build Filenames
+python
+
+build_filename(temperature_effective, gravity, metallicity, co_ratio="", cloud_seeding_parameter="", eddy_coefficient="")
+Constructs a filename string based on input parameters and loads the spectrum if it exists.
+
+2. Validate Files
+python
+
+file_validate(file_name)
+Checks whether a spectral file matches valid parameter combinations derived from local archives.
+
+3. Load Spectra
+python
+
+file_to_array(file)
+Extracts and reads spectral data into a NumPy array. Handles .spec, .nc, and .txt/.gz formats inside compressed archives.
+
+4. Plot Resolution
+python
+
+plot_resolution(wavelength, resolution, label=None)
+Generates a wavelength vs. resolution plot.
+
+5. Rebin to Constant Resolution
+python
+
+rebin_spectrum_to_resolution(wavelength, flux, target_resolution)
+Rebins a spectrum so that R = λ / Δλ is constant.
+
+File Naming Conventions
+	•	Bobcat: sp_t{Teff}g{gravity}nc_m{metal}[optional_co{ratio}]
+	•	Diamondback: t{Teff}g{gravity}[nc|f{cloud}]m{metal}_co{ratio}.spec
+	•	Elf Owl: spectra_logzz_{eddy}_teff_{Teff}_grav_{gravity}_mh_{metal}_co_{ratio}.nc
+
+Expected Archive Files
+Place the following archives in the same directory as the script. 
+	•	spectra_m+0.0.tar.gz (and other Bobcat variations)
+	•	spectra.zip (Diamondback)
+	•	output_*.tar.gz (Elf Owl, temperature range–specific)
+
+Example Usage
+python
+
+# Load and validate a Diamondback model
+spectrum = build_filename(1500, 100, 0.0, co_ratio=1.0, cloud_seeding_parameter=2)
+
+# Load Bobcat spectrum directly
+array = file_to_array("sp_t1000g1000nc_m+0.0_co1.5")
+
+# Validate a file
+is_valid = file_validate("spectra_logzz_2.0_teff_1600.0_grav_100.0_mh_0.0_co_1.0.nc")
+
+# Plot resolution
+wavelength = array[:,0]
+flux = array[:,1]
+resolution = wavelength / np.gradient(wavelength)
+plot_resolution(wavelength, resolution, label="Model Spectrum")
+
+Dependencies
+	•	Python 3.x
+	•	numpy
+	•	xarray
+	•	matplotlib
+	•	scipy
+Install with:
+bash
+
+pip install numpy xarray matplotlib scipy
+
+Notes
+	•	Archive files must be present locally; this script does not download models.
+	•	The file_validate function prints helpful messages if parameters are invalid.
+	•	Wavelengths are expected in microns.
