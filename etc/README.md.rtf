@@ -1,0 +1,262 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2820
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Bold;\f1\froman\fcharset0 Times-Roman;\f2\fmodern\fcharset0 Courier;
+}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red109\green109\blue109;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\cssrgb\c50196\c50196\c50196;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid301\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid4}
+{\list\listtemplateid5\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid401\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid5}
+{\list\listtemplateid6\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid501\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid6}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}{\listoverride\listid5\listoverridecount0\ls5}{\listoverride\listid6\listoverridecount0\ls6}}
+\margl1440\margr1440\vieww28600\viewh18000\viewkind0
+\deftab720
+\pard\pardeftab720\sa298\partightenfactor0
+
+\f0\b\fs36 \cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Spectral Model Loader & Analysis Toolkit\
+\pard\pardeftab720\sa298\partightenfactor0
+\cf0 Overview\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\b0\fs24 \cf0 This Python script provides a set of utilities for loading, validating, and processing spectra from three different atmospheric model grids:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls1\ilvl0
+\f0\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Bobcat
+\f1\b0  \'97 standard 
+\f2\fs26 .tar.gz
+\f1\fs24  archives containing plain text or gzipped spectra.\
+\ls1\ilvl0
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Diamondback
+\f1\b0  \'97 
+\f2\fs26 .zip
+\f1\fs24  archives containing 
+\f2\fs26 .spec
+\f1\fs24  text spectra.\
+\ls1\ilvl0
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Elf Owl
+\f1\b0  \'97 
+\f2\fs26 .tar.gz
+\f1\fs24  archives containing NetCDF (
+\f2\fs26 .nc
+\f1\fs24 ) spectra.\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 It supports:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls2\ilvl0\cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Building valid filenames from physical parameters.\
+\ls2\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Validating filenames against available model grids.\
+\ls2\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Extracting and reading spectra from compressed archives.\
+\ls2\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Rebining spectra to constant resolution.\
+\ls2\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Plotting spectral resolution curves.\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 The script assumes 
+\f0\b all model archive files are stored in the same directory as this script
+\f1\b0 .\
+\pard\pardeftab720\partightenfactor0
+\cf3 \strokec3 \
+\pard\pardeftab720\sa298\partightenfactor0
+
+\f0\b\fs36 \cf0 \strokec2 Features\
+\pard\pardeftab720\sa280\partightenfactor0
+
+\fs28 \cf0 1. Build Filenames\
+\pard\pardeftab720\partightenfactor0
+
+\f2\b0\fs26 \cf0 python\
+\
+build_filename(temperature_effective, gravity, metallicity, co_ratio="", cloud_seeding_parameter="", eddy_coefficient="")\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\fs24 \cf0 Constructs a filename string based on input parameters and loads the spectrum if it exists.\
+\pard\pardeftab720\partightenfactor0
+\cf3 \strokec3 \
+\pard\pardeftab720\sa280\partightenfactor0
+
+\f0\b\fs28 \cf0 \strokec2 2. Validate Files\
+\pard\pardeftab720\partightenfactor0
+
+\f2\b0\fs26 \cf0 python\
+\
+file_validate(file_name)\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\fs24 \cf0 Checks whether a spectral file matches valid parameter combinations derived from local archives.\
+\pard\pardeftab720\partightenfactor0
+\cf3 \strokec3 \
+\pard\pardeftab720\sa280\partightenfactor0
+
+\f0\b\fs28 \cf0 \strokec2 3. Load Spectra\
+\pard\pardeftab720\partightenfactor0
+
+\f2\b0\fs26 \cf0 python\
+\
+file_to_array(file)\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\fs24 \cf0 Extracts and reads spectral data into a NumPy array.\uc0\u8232 Handles 
+\f2\fs26 .spec
+\f1\fs24 , 
+\f2\fs26 .nc
+\f1\fs24 , and 
+\f2\fs26 .txt
+\f1\fs24 /
+\f2\fs26 .gz
+\f1\fs24  formats inside compressed archives.\
+\pard\pardeftab720\partightenfactor0
+\cf3 \strokec3 \
+\pard\pardeftab720\sa280\partightenfactor0
+
+\f0\b\fs28 \cf0 \strokec2 4. Plot Resolution\
+\pard\pardeftab720\partightenfactor0
+
+\f2\b0\fs26 \cf0 python\
+\
+plot_resolution(wavelength, resolution, label=None)\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\fs24 \cf0 Generates a wavelength vs. resolution plot.\
+\pard\pardeftab720\partightenfactor0
+\cf3 \strokec3 \
+\pard\pardeftab720\sa280\partightenfactor0
+
+\f0\b\fs28 \cf0 \strokec2 5. Rebin to Constant Resolution\
+\pard\pardeftab720\partightenfactor0
+
+\f2\b0\fs26 \cf0 python\
+\
+rebin_spectrum_to_resolution(wavelength, flux, target_resolution)\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\fs24 \cf0 Rebins a spectrum so that 
+\f0\b R = \uc0\u955  / \u916 \u955 
+\f1\b0  is constant.\
+\pard\pardeftab720\partightenfactor0
+\cf3 \strokec3 \
+\pard\pardeftab720\sa298\partightenfactor0
+
+\f0\b\fs36 \cf0 \strokec2 File Naming Conventions\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls3\ilvl0
+\fs24 \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Bobcat
+\f1\b0 : 
+\f2\fs26 sp_t\{Teff\}g\{gravity\}nc_m\{metal\}[optional_co\{ratio\}]
+\f1\fs24 \
+\ls3\ilvl0
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Diamondback
+\f1\b0 : 
+\f2\fs26 t\{Teff\}g\{gravity\}[nc|f\{cloud\}]m\{metal\}_co\{ratio\}.spec
+\f1\fs24 \
+\ls3\ilvl0
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Elf Owl
+\f1\b0 : 
+\f2\fs26 spectra_logzz_\{eddy\}_teff_\{Teff\}_grav_\{gravity\}_mh_\{metal\}_co_\{ratio\}.nc
+\f1\fs24 \
+\pard\pardeftab720\partightenfactor0
+\cf3 \strokec3 \
+\pard\pardeftab720\sa298\partightenfactor0
+
+\f0\b\fs36 \cf0 \strokec2 Expected Archive Files\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\b0\fs24 \cf0 Place the following archives in the same directory as the script. \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls4\ilvl0
+\f2\fs26 \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 spectra_m+0.0.tar.gz
+\f1\fs24  (and other Bobcat variations)\
+\ls4\ilvl0
+\f2\fs26 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 spectra.zip
+\f1\fs24  (Diamondback)\
+\ls4\ilvl0
+\f2\fs26 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 output_*.tar.gz
+\f1\fs24  (Elf Owl, temperature range\'96specific)\
+\pard\pardeftab720\partightenfactor0
+\cf3 \strokec3 \
+\pard\pardeftab720\sa298\partightenfactor0
+
+\f0\b\fs36 \cf0 \strokec2 Example Usage\
+\pard\pardeftab720\partightenfactor0
+
+\f2\b0\fs26 \cf0 python\
+\
+# Load and validate a Diamondback model\
+spectrum = build_filename(1500, 100, 0.0, co_ratio=1.0, cloud_seeding_parameter=2)\
+\
+# Load Bobcat spectrum directly\
+array = file_to_array("sp_t1000g1000nc_m+0.0_co1.5")\
+\
+# Validate a file\
+is_valid = file_validate("spectra_logzz_2.0_teff_1600.0_grav_100.0_mh_0.0_co_1.0.nc")\
+\
+# Plot resolution\
+wavelength = array[:,0]\
+flux = array[:,1]\
+resolution = wavelength / np.gradient(wavelength)\
+plot_resolution(wavelength, resolution, label="Model Spectrum")\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs24 \cf3 \strokec3 \
+\pard\pardeftab720\sa298\partightenfactor0
+
+\f0\b\fs36 \cf0 \strokec2 Dependencies\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls5\ilvl0
+\f1\b0\fs24 \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Python 3.x\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls5\ilvl0
+\f2\fs26 \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 numpy
+\f1\fs24 \
+\ls5\ilvl0
+\f2\fs26 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 xarray
+\f1\fs24 \
+\ls5\ilvl0
+\f2\fs26 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 matplotlib
+\f1\fs24 \
+\ls5\ilvl0
+\f2\fs26 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 scipy
+\f1\fs24 \
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 Install with:\
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs26 \cf0 bash\
+\
+pip install numpy xarray matplotlib scipy\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs24 \cf3 \strokec3 \
+\pard\pardeftab720\sa298\partightenfactor0
+
+\f0\b\fs36 \cf0 \strokec2 Notes\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls6\ilvl0
+\fs24 \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Archive files must be present locally
+\f1\b0 ; this script does not download models.\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls6\ilvl0\cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 The 
+\f2\fs26 file_validate
+\f1\fs24  function prints helpful messages if parameters are invalid.\
+\ls6\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Wavelengths are expected in microns.\
+}
