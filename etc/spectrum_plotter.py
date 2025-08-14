@@ -5,7 +5,8 @@ Created on Sun Jun 22 17:16:27 2025
 
 This script reads in spectral models and computes the 
 spectral resolution as a function of wavelength. It is designed for use with 
-models stored locally. Given filenames (or optionally, parameters like temperature, 
+models stored locally, from the Sonora family model dataset and the Madden 2020
+dataset. Given filenames (or optionally, parameters like temperature, 
 surface gravity, and metallicity), the code loads the spectra, extracts the 
 wavelength and flux data, computes the spectral resolution (R = λ / Δλ), 
 and returns it for further analysis or plotting. Users can visualize 
@@ -502,6 +503,7 @@ print("ELF OWL COMPLETED")
 # submit a ReadMe file 
 
 # do this all by Wednesday 
+
 
 
 
