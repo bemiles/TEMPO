@@ -28,7 +28,7 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 
 
-def build_filename(temperature_effective, gravity, metallicity, co_ratio="", cloud_seeding_parameter="", eddy_coefficient=""):
+def build_filename(base_dir, temperature_effective, gravity, metallicity, co_ratio="", cloud_seeding_parameter="", eddy_coefficient=""):
     """
     Constructs a spectral filename string based on input atmospheric parameters 
     and model type, then attempts to validate and load the corresponding file.
@@ -43,6 +43,8 @@ def build_filename(temperature_effective, gravity, metallicity, co_ratio="", clo
 
     Parameters
     ----------
+    base_dir: str
+        Base directory. 
     temperature_effective : float or int
         Effective temperature (Teff) of the model atmosphere.
     gravity : float or int
@@ -105,6 +107,8 @@ def build_filename(temperature_effective, gravity, metallicity, co_ratio="", clo
             filename += f"+{metallicity}"
         else:
             filename += f"{metallicity}"
+
+    filename = base_dir + filename 
             
     # Validate constructed filename and attempt to load the file
     if file_validate(filename):
@@ -503,6 +507,7 @@ print("ELF OWL COMPLETED")
 # submit a ReadMe file 
 
 # do this all by Wednesday 
+
 
 
 
