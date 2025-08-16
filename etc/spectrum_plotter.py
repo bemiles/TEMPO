@@ -13,8 +13,12 @@ and returns it for further analysis or plotting. Users can visualize
 the resolution or rebin/interpolate it to compare with observational 
 requirements.
 
+For this code to work, make sure it exists on the same level as all the 
+tar.gz and .zip files. 
+
 Spectra are expected to be in ASCII format with a header of 2 lines and 
-two columns: wavelength (microns) and flux (erg/cm²/s/Hz).
+two columns: wavelength (microns) and flux (erg/cm²/s/Hz), or other acceptable
+flux units.
 """
 
 import io
@@ -507,6 +511,7 @@ print("ELF OWL COMPLETED")
 # submit a ReadMe file 
 
 # do this all by Wednesday 
+
 
 
 
